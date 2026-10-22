@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+  }
+  #count {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 150px;
+    font-weight: 900;
+    color: white;
+    -webkit-text-stroke: 3px black;
+    text-shadow: 0 0 25px #00eaff;
+    display: none;
+  }
+</style>
+</head>
+<body>
+<div id="count">3</div>
+<script>
+const count = document.getElementById("count");
+let running = false;
+let timer;
+
+function startCountdown() {
+  if (running) return;
+  running = true;
+  let n = 3;
+  count.style.display = "block";
+  count.textContent = n;
+
+  timer = setInterval(() => {
+    n--;
+    if (n > 0) {
+      count.textContent = n;
+    } else {
+      clearInterval(timer);
+      count.textContent = "TIME!";
+      setTimeout(() => {
+        count.style.display = "none";
+        running = false;
+      }, 600);
+    }
+  }, 1000);
+}
+
+document.addEventListener("keydown", e => {
+  if (e.code === "Space") {
+    e.preventDefault();
+    startCountdown();
+  }
+  if (e.key.toLowerCase() === "r") {
+    clearInterval(timer);
+    running = false;
+    count.style.display = "none";
+  }
+});
+</script>
+</body>
+</html>
